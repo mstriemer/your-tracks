@@ -1,6 +1,6 @@
 use Rack::Static,
     :urls => ["/images", "/scripts", "/styles", "/bower_components"],
-    :root => "app"
+    :root => "dist"
 
 run lambda { |env|
     [
@@ -9,6 +9,6 @@ run lambda { |env|
         'Content-Type'  => 'text/html',
         'Cache-Control' => 'public, max-age=86400'
     },
-        File.open('app/index.html', File::RDONLY)
+        File.open('dist/index.html', File::RDONLY)
     ]
 }
