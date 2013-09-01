@@ -28,6 +28,10 @@ define([], function () {
                     maximumAge: 0,
                 });
         },
+        stop: function () {
+            navigator.geolocation.clearWatch(this.watchId);
+            this.watchId = null;
+        },
         newPosition: function (position) {
             notify(this.changeCallbacks, position);
         },

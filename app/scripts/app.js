@@ -4,8 +4,8 @@ define(['geo'], function (geo) {
 
     var container = document.querySelector('.current-track tbody');
     var tracker = new geo.GeoTracker();
+    window.tracker = tracker;
 
-    tracker.start();
     tracker.on('change', function (position) {
         var row = document.createElement('tr');
         var time = document.createElement('td');
@@ -20,6 +20,25 @@ define(['geo'], function (geo) {
         row.appendChild(lat);
         row.appendChild(lon);
         container.appendChild(row);
+    });
+
+    document.querySelector('.start-track')
+            .addEventListener('click', function (e) {
+        e.preventDefault();
+        tracker.start();
+        var recordStatus = document.querySelector('.record-status');
+        recordStatus.classList.add('recording');
+        recordStatus.classList.remove('stopped');
+
+    });
+
+    document.querySelector('.stop-track')
+            .addEventListener('click', function (e) {
+        e.preventDefault();
+        tracker.stop();
+        var recordStatus = document.querySelector('.record-status');
+        recordStatus.classList.remove('recording');
+        recordStatus.classList.add('stopped');
     });
 
     return '\'Allo \'Allo!';
