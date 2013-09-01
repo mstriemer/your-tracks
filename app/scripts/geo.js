@@ -1,6 +1,17 @@
 define([], function () {
+    function notify() {
+        var args = Array.prototype.slice.call(arguments, 0);
+        var callbacks = args.shift();
+        var count = callbacks.length;
+        for (var i = 0; i < count; i++) {
+            callbacks[i].apply(null, args);
+        }
+    }
+
     function GeoTracker () {
         this.points = [];
+        this.changeCallbacks = [];
+        this.errorCallbacks = [];
     }
 
     GeoTracker.prototype = {
@@ -15,18 +26,19 @@ define([], function () {
                 });
         },
         newPosition: function (position) {
-            console.log(position);
-            this.trackPoint(position);
+            notify(this.changeCallbacks, position);
         },
         positionError: function (error) {
-            console.log(error);
-            this.trackError(error);
+            notify(this.errorCallbacks, error);
         },
-        trackPoint: function (point) {
-            this.points.push(point);
-        },
-        trackError: function (error) {
-            this.points.push(error);
+        on: function(name, callback) {
+            if (name == 'change') {
+                this.changeCallbacks.push(callback);
+            } else if (name == 'error') {
+                this.errorCallbacks.push(callback);
+            } else {
+                throw new Error("unknown event " + name);
+            }
         },
     };
     return {
