@@ -1,4 +1,7 @@
+/*global define */
 define([], function () {
+    'use strict';
+
     function notify() {
         var args = Array.prototype.slice.call(arguments, 0);
         var callbacks = args.shift();
@@ -32,12 +35,12 @@ define([], function () {
             notify(this.errorCallbacks, error);
         },
         on: function(name, callback) {
-            if (name == 'change') {
+            if (name === 'change') {
                 this.changeCallbacks.push(callback);
-            } else if (name == 'error') {
+            } else if (name === 'error') {
                 this.errorCallbacks.push(callback);
             } else {
-                throw new Error("unknown event " + name);
+                throw new Error('unknown event ' + name);
             }
         },
     };
