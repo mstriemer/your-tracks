@@ -1,6 +1,8 @@
 require.config({
     paths: {
         geo: 'geo',
+        tracks: 'tracks',
+        localForage: 'localForage',
     },
     shim: {
     }

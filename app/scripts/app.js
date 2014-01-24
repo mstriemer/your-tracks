@@ -1,10 +1,18 @@
 /*global define */
-define(['geo'], function (geo) {
+define(['geo', 'tracks'], function (geo, tracks) {
     'use strict';
 
     var container = document.querySelector('.current-track tbody');
     var tracker = new geo.GeoTracker();
+    var track = new tracks.Track();
     window.tracker = tracker;
+    window.track = track;
+
+    tracker.on('change', function (position) {
+        track.addPoint(position.coords.latitude,
+                       position.coords.longitude,
+                       new Date(position.timestamp));
+    });
 
     tracker.on('change', function (position) {
         var row = document.createElement('tr');
