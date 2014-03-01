@@ -1,5 +1,5 @@
 /*global define */
-define(['geo', 'tracks'], function (geo, tracks) {
+define(['geo', 'tracks', 'map'], function (geo, tracks, map) {
     'use strict';
 
     var container = document.querySelector('.current-track tbody');
@@ -28,6 +28,11 @@ define(['geo', 'tracks'], function (geo, tracks) {
         row.appendChild(lat);
         row.appendChild(lon);
         container.appendChild(row);
+    });
+
+    tracker.on('change', function (position) {
+        map.setView([position.coords.latitude, position.coords.longitude], 13);
+        map.marker([position.coords.latitude, position.coords.longitude]);
     });
 
     document.querySelector('.start-track')

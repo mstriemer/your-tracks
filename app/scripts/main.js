@@ -1,11 +1,6 @@
 require.config({
-    paths: {
-        geo: 'geo',
-        tracks: 'tracks',
-        localForage: 'localForage',
-    },
-    shim: {
-    }
+    paths: {},
+    shim: {}
 });
 
 require(['app'], function (app) {
