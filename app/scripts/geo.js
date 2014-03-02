@@ -17,6 +17,8 @@ define([], function () {
         this.errorCallbacks = [];
     }
 
+    var exports = {};
+
     GeoTracker.prototype = {
         start: function () {
             this.watchId = navigator.geolocation.watchPosition(
@@ -33,6 +35,7 @@ define([], function () {
             this.watchId = null;
         },
         newPosition: function (position) {
+            exports.currentPosition = position;
             notify(this.changeCallbacks, position);
         },
         positionError: function (error) {
@@ -48,7 +51,8 @@ define([], function () {
             }
         },
     };
-    return {
-        GeoTracker: GeoTracker,
-    };
+
+    exports.GeoTracker = GeoTracker;
+
+    return exports;
 });

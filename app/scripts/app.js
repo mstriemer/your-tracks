@@ -31,8 +31,8 @@ define(['geo', 'tracks', 'map'], function (geo, tracks, map) {
     });
 
     tracker.on('change', function (position) {
-        map.setView([position.coords.latitude, position.coords.longitude], 13);
-        map.marker([position.coords.latitude, position.coords.longitude]);
+        map.currentPosition(position.coords.latitude,
+                            position.coords.longitude);
     });
 
     document.querySelector('.start-track')

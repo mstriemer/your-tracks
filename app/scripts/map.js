@@ -5,10 +5,28 @@ define('map', ['leaflet'], function (L) {
         maxZoom: 18
     }).addTo(map);
 
-    return {
-        setView: map.setView.bind(map),
-        marker: function (pos) {
-            L.marker(pos).addTo(map);
+    var currentPositionMarker;
+    var currentPath = L.polyline([]).addTo(map);
+
+    var self = {
+        setView: function (lat, lon, zoom) {
+            map.setView([lat, lon], zoom || 16);
+        },
+        marker: function (lat, lon) {
+            return L.marker([lat, lon]).addTo(map);
+        },
+        addToPath: function (lat, lon) {
+            currentPath.addLatLng([lat, lon]);
+        },
+        currentPosition: function (lat, lon) {
+            self.setView(lat, lon);
+            if (currentPositionMarker) {
+                currentPositionMarker.setLatLng([lat, lon]);
+            } else {
+                currentPositionMarker = self.marker(lat, lon);
+            }
+            self.addToPath(lat, lon);
         },
     };
+    return self;
 });
